@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('https://lh3.googleusercontent.com/p/AF1QipOw-WVj37BmLgbm7wKDuZsblZP0u2VmX4QDPnax=s680-w680-h510'); /* Add your background image */
+            background-size: cover;
+            background-position: center;
+        }
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.9); /* Slight transparency for background */
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            text-align: center;
+        }
+        .login-container img {
+            height: 70px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #3a0a0a; /* Brick Red */
+            margin-bottom: 20px;
+        }
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4b2e77; /* Dark Purplish Navy Blue */
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background-color: #3a1f6d; /* Slightly darker shade */
+        }
+        .admin-link, .add-user-link {
+            display: block;
+            text-align: center;
+            padding: 10px 0;
+            color: white;
+            background-color: #4b2e77; /* Dark Purplish Navy Blue */
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+        .admin-link:hover, .add-user-link:hover {
+            background-color: #3a1f6d; /* Slightly darker shade */
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <img src="https://scontent.fcmb3-2.fna.fbcdn.net/v/t39.30808-6/451339531_122182496816069870_4239727598254276663_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=wA5qCwQGGH8Q7kNvgHQZFtz&_nc_zt=23&_nc_ht=scontent.fcmb3-2.fna&oh=00_AYBt38sc_gtK2VzRs9UN1rL2GvWtjspVj0mnj3Mf5h9CmQ&oe=66BD7F14" alt="Logo">
+        <h2>Login</h2>
+        <input type="text" id="login-username" placeholder="Username">
+        <input type="password" id="login-password" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <a href="#" id="admin-link" class="admin-link" style="display: none;">Admin Panel</a>
+        <a href="#" id="add-user-link" class="add-user-link">Add User</a>
+    </div>
+
+    <script>
+        function login() {
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+
+            if (username === '' || password === '') {
+                alert('Please enter both username and password.');
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const user = users.find(u => u.username === username && u.password === password);
+
+            if (user) {
+                localStorage.setItem('loggedIn', true);
+                window.location.href = 'invoice.html'; // Redirect to your invoice app
+            } else {
+                alert('Invalid username or password.');
+            }
+        }
+
+        // Check if the logged-in user is allowed to access the admin panel
+        document.getElementById('login-username').addEventListener('input', function() {
+            const username = this.value.trim();
+            const adminLink = document.getElementById('admin-link');
+            if (username === 'amiladilshan111@gmail.com') {
+                adminLink.style.display = 'block';
+                adminLink.href = 'admin.html';
+            } else {
+                adminLink.style.display = 'none';
+            }
+        });
+
+        // Add User functionality with password validation
+        document.getElementById('add-user-link').addEventListener('click', function() {
+            const addUserPassword = prompt('Enter the password to add a user:');
+            if (addUserPassword === 'HTTF@2023') {
+                window.location.href = 'admin.html'; // Redirect to your add user page
+            } else {
+                alert('Incorrect password.');
+            }
+        });
+    </script>
+</body>
+</html>
+
